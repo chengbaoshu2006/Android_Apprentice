@@ -24,7 +24,7 @@
         android:onClick="open_second_activity"
         android:text="open_second_activity"
         tools:layout_editor_absoluteX="94dp"
-        tools:layout_editor_absoluteY="164dp" />
+        tools:layout_editor_absoluteY="159dp" />
 
     <Button
         android:id="@+id/bt_sendBroadcast"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:onClick="bt_sendBroadcast_handler"
         android:text="Button"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="281dp" />
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="258dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

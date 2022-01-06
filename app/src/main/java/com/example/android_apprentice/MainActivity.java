@@ -5,14 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.view.View;
+import com.example.android_apprentice.MyDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,16 +38,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Log.d("Menu","Check menu item");
+        Log.d("Menu",item.getTitle().toString());
+        MyDatabase phonebook_db = new MyDatabase(this, "myPhoneBook.db",null,1);
+
+
         switch (item.getItemId()) {
+            case R.id.create_item:
+                Toast.makeText(this, "You click Create item！",Toast.LENGTH_SHORT).show();
+                //phonebook_db.getWritableDatabase();
+                phonebook_db.onCreate(phonebook_db.getWritableDatabase());
+                break;
             case R.id.add_item:
                 Toast.makeText(this, "You click Add item！",Toast.LENGTH_SHORT).show();
+                phonebook_db.phonebook_insert(phonebook_db.getWritableDatabase(),"Cheng","18665803207","Nanshan district,Shenzhen City");
                 break;
-            case R.id.remove_item:
+            case R.id.update_item:
+                Toast.makeText(this, "You click Update item！",Toast.LENGTH_SHORT).show();
+                phonebook_db.phonebook_update(phonebook_db.getWritableDatabase());
+                break;
+            case R.id.delete_item:
                 Toast.makeText(this, "You click Remove item！",Toast.LENGTH_SHORT).show();
+                phonebook_db.phonebook_delete(phonebook_db.getWritableDatabase());
                 break;
             case R.id.check_item:
                 Toast.makeText(this, "You click Check item！",Toast.LENGTH_SHORT).show();
+                phonebook_db.phonebook_check(phonebook_db.getWritableDatabase());
                 break;
         }
         return super.onOptionsItemSelected(item);
