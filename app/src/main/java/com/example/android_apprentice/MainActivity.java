@@ -62,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Button","open second activity click");
     }
 
+    public void bt_sendBroadcast_handler(View view)
+    {
+        Intent intent_bc = new Intent("com.example.android_apprentice.MY_BC");
+        sendBroadcast(intent_bc,null);
+        Log.d("Button","Send BroadCast");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(resultCode == RESULT_OK)

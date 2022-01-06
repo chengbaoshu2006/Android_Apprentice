@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
 
     <Button
         android:id="@+id/bt_open_second_activity"
@@ -23,6 +24,15 @@
         android:onClick="open_second_activity"
         android:text="open_second_activity"
         tools:layout_editor_absoluteX="94dp"
-        tools:layout_editor_absoluteY="407dp" />
+        tools:layout_editor_absoluteY="164dp" />
+
+    <Button
+        android:id="@+id/bt_sendBroadcast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="bt_sendBroadcast_handler"
+        android:text="Button"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="281dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
