@@ -21,18 +21,22 @@
         android:id="@+id/bt_open_second_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="28dp"
         android:onClick="open_second_activity"
         android:text="open_second_activity"
-        tools:layout_editor_absoluteX="94dp"
-        tools:layout_editor_absoluteY="159dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bt_sendBroadcast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
         android:onClick="bt_sendBroadcast_handler"
         android:text="Button"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="258dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
