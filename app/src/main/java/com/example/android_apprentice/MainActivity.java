@@ -3,21 +3,45 @@ package com.example.android_apprentice;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 import android.view.View;
 import com.example.android_apprentice.MyDatabase;
+import com.example.android_apprentice.MyDownload_Service;
 
 public class MainActivity extends AppCompatActivity {
 
+    private MyDownload_Service.DownloadBinder downloadBinder;
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d("Service","DownloadBinder intial");
+            downloadBinder = (MyDownload_Service.DownloadBinder) service;
+        }
+
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Disable display title on activity, if you want to enable menu feature in the project, please don't hide title.
         //getSupportActionBar().hide();
+
+        Intent intent = new Intent(this, MyDownload_Service.class);
+        startService(intent); // 启动服务
+        bindService(intent, connection, BIND_AUTO_CREATE); // 绑定服务
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+        }
     }
 
 
@@ -84,6 +115,33 @@ public class MainActivity extends AppCompatActivity {
         Intent intent_bc = new Intent("com.example.android_apprentice.MY_BC");
         sendBroadcast(intent_bc,null);
         Log.d("Button","Send BroadCast");
+    }
+    public void bt_download_handler(View view)
+    {
+        Button bt_service = (Button)findViewById(R.id.bt_download);
+        switch (bt_service.getText().toString())
+        {
+            case "Download":
+                bt_service.setText("Pause");
+                //String url = "https://raw.githubusercontent.com/guolindev/eclipse/master/eclipse-inst-win64.exe";
+                String url = "http://speed.hetzner.de/100MB.bin";
+                downloadBinder.startDownload(url);
+                break;
+            case "Pause":
+                bt_service.setText("Cancel");
+                downloadBinder.pauseDownload();
+                break;
+            case "Cancel":
+                bt_service.setText("Download");
+                downloadBinder.cancelDownload();
+                break;
+
+            default:
+                bt_service.setText("Download");
+                break;
+        }
+
+
     }
 
     @Override
