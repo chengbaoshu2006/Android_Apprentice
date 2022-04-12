@@ -20,10 +20,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 import com.example.android_apprentice.MyDatabase;
 import com.example.android_apprentice.MyDownload_Service;
+import android.view.KeyEvent;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
         }
+        TextView mydisplay = findViewById(R.id.Display_textbox);
+        String[] mystring = {"123","456"};
+        mydisplay.setText(QLog_JNI.Qlog_Start(1)+QLog_JNI.Qlog_Start(2)+QLog_JNI.Qlog_Start(3));
     }
 
 
@@ -65,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.main,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        Log.d("Apprentice","onKeyDown:"+ keyCode + "->"+event.toString());
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -135,13 +148,10 @@ public class MainActivity extends AppCompatActivity {
                 bt_service.setText("Download");
                 downloadBinder.cancelDownload();
                 break;
-
             default:
                 bt_service.setText("Download");
                 break;
         }
-
-
     }
 
     @Override
@@ -152,5 +162,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity",return_data);
 
         }
+        //super.onActivityResult(requestCode,resultCode,data);
     }
 }
